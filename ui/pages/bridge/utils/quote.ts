@@ -64,6 +64,7 @@ export const isValidQuoteRequest = (
 export const calcToAmount = (
   { destTokenAmount, destAsset }: Quote,
   exchangeRate: number | null,
+  usdExchangeRate: number | null,
 ) => {
   const normalizedDestAmount = calcTokenAmount(
     destTokenAmount,
@@ -73,6 +74,9 @@ export const calcToAmount = (
     amount: normalizedDestAmount,
     valueInCurrency: exchangeRate
       ? normalizedDestAmount.mul(exchangeRate.toString())
+      : null,
+    usd: usdExchangeRate
+      ? normalizedDestAmount.mul(usdExchangeRate.toString())
       : null,
   };
 };
@@ -256,10 +260,7 @@ export const formatCurrencyAmount = (
   return formatCurrency(amount.toString(), currency, precision);
 };
 
-export const formatProviderLabel = ({
-  bridgeId,
-  bridges,
-}: {
+export const formatProviderLabel = (args?: {
   bridgeId: QuoteResponse['quote']['bridgeId'];
   bridges: QuoteResponse['quote']['bridges'];
-}): `${string}_${string}` => `${bridgeId}_${bridges[0]}`;
+}): `${string}_${string}` => `${args?.bridgeId}_${args?.bridges[0]}`;
