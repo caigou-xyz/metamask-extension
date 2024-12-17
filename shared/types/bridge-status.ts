@@ -135,10 +135,9 @@ export type BridgeHistoryItem = {
   completionTime?: number; // timestamp in ms
   pricingData?: {
     amountSent: string; // This is from QuoteMetadata.sentAmount.amount, the actual amount sent by user in non-atomic decimal form
-
+    amountSentInUsd?: string;
     quotedGasInUsd?: string;
     quotedReturnInUsd?: string;
-    amountSentInUsd?: string;
     quotedRefuelSrcAmountInUsd?: string;
     quotedRefuelDestAmountInUsd?: string;
   };
@@ -153,9 +152,16 @@ export enum BridgeStatusAction {
   GET_STATE = 'getState',
 }
 
-// The BigNumber values are serialized to strings
+// The BigNumber values are serialized to strings when QuoteMetadata sent to the background
 export type QuoteMetadataSerialized = {
-  sentAmount: { amount: string; fiat: string | null };
+  gasFee: { amount: string; valueInCurrency: string | null };
+  totalNetworkFee: { amount: string; valueInCurrency: string | null }; // estimatedGasFees + relayerFees
+  totalMaxNetworkFee: { amount: string; valueInCurrency: string | null }; // maxGasFees + relayerFees
+  toTokenAmount: { amount: string; valueInCurrency: string | null };
+  adjustedReturn: { valueInCurrency: string | null }; // destTokenAmount - totalNetworkFee
+  sentAmount: { amount: string; valueInCurrency: string | null }; // srcTokenAmount + metabridgeFee
+  swapRate: string; // destTokenAmount / sentAmount
+  cost: { valueInCurrency: string | null }; // sentAmount - adjustedReturn
 };
 
 export type StartPollingForBridgeTxStatusArgs = {
