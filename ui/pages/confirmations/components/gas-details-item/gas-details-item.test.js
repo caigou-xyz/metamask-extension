@@ -115,7 +115,7 @@ describe('GasDetailsItem', () => {
             gasLimit: '0x52081',
             maxFeePerGas: '0x38D7EA4C68000',
           },
-          userFeeLevel: 'medium',
+          userFeeLevel: 'high',
           dappSuggestedGasFees: {
             maxPriorityFeePerGas: '0x38D7EA4C68000',
             maxFeePerGas: '0x38D7EA4C68000',
