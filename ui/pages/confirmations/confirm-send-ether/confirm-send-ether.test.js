@@ -53,7 +53,7 @@ const sendEther = {
   userFeeLevel: 'dappSuggested',
   defaultGasEstimates: {
     estimateType: 'dappSuggested',
-    gas: '0x5208',
+    gasLimit: '0x5208',
     maxFeePerGas: '0x2540be400',
     maxPriorityFeePerGas: '0x3b9aca00',
   },
